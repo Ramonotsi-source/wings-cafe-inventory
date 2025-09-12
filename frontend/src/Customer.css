@@ -1,0 +1,53 @@
+html, body, #root {
+  margin: 0;
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: row;    
+  height: 100vh;
+}
+
+.sidebar {
+  flex: 0 0 220px;        
+  background: #2d3b26;    
+  z-index: 1;             
+}
+
+.app {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #f0ebe3; 
+}
+
+:root {
+  --bg-main: #f0ebe3;
+  --bg-card: #e8dfd5;
+  --text-main: #3a2c21;
+  --accent: #8c6e52;
+  --accent-hover: #7a5e45;
+  --low-stock: #f5e9dd;
+  --border-color: #d9cbbf;
+}

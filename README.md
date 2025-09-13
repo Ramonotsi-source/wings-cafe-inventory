@@ -1,20 +1,24 @@
 # Wings Cafe Inventory System 🚀
 
 A full-stack web application built with:
-- **Frontend**: React (or HTML/CSS/JS)
-- **Backend**: Node.js (or Python Flask/Django)
+- **Frontend**: React
+- **Backend**: Node.js + Express
 
 ## 🌐 Live Demo
-[View the Frontend Here](https://ramonotsi-source.github.io/wings-cafe-inventory/)
+
+🔗 **Frontend (User Interface)**:  
+[https://ramonotsi-source.github.io/wings-cafe-inventory/](https://ramonotsi-source.github.io/wings-cafe-inventory/)
+
+🔗 **Backend (REST API)**:  
+[https://wings-cafe-backend.onrender.com](https://wings-cafe-backend.onrender.com)
+
+> 💡 The frontend runs on **GitHub Pages**.  
+> The backend runs on **Render.com** — enabling real data persistence across sessions.
 
 ## 🛠 Setup Instructions
 
-### Frontend
+### Frontend (React)
 ```bash
 cd frontend
 npm install
 npm start
-
-cd backend
-npm install
-node server.js

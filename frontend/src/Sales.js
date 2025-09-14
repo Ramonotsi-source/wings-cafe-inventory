@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Sales.css';
 
 export default function Sales({ products: initialProducts, setProducts, salesLog: initialSalesLog, setSalesLog, customers: initialCustomers, setCustomers }) {
-  const [sale, setSale] = useState({ productId: '', customerId: '', quantity: '' });
+  const [sale, setSale] = useState({ productId: '', customerId: '', quantity: '', customerName: '' });
 
   const [localProducts, setLocalProducts] = useState(initialProducts || []);
   const [localCustomers, setLocalCustomers] = useState(initialCustomers || []);
@@ -28,12 +28,11 @@ export default function Sales({ products: initialProducts, setProducts, salesLog
         setLocalCustomers(custRes.data || []);
         setLocalSalesLog(saleRes.data || []);
 
-        setProducts(prodRes.data || []);     
-        setCustomers(custRes.data || []);    
-        setSalesLog(saleRes.data || []);     
+        setProducts(prodRes.data || []);
+        setCustomers(custRes.data || []);
+        setSalesLog(saleRes.data || []);
       } catch (err) {
         console.error('Error loading sales:', err);
-   
         setLocalProducts([]);
         setLocalCustomers([]);
         setLocalSalesLog([]);
@@ -46,41 +45,32 @@ export default function Sales({ products: initialProducts, setProducts, salesLog
   const handleSale = async e => {
     e.preventDefault();
     const product = localProducts.find(p => p.id === parseInt(sale.productId));
-    const customer = localCustomers.find(c => c.id === parseInt(sale.customerId));
     const qty = parseInt(sale.quantity);
 
-    if (!product || qty > product.quantity || !customer) {
-      alert('Invalid sale: check stock and customer');
+    if (!product || qty > product.quantity || !sale.customerName.trim()) {
+      alert('Invalid sale: check stock and enter customer name');
       return;
     }
 
     const updatedProduct = { ...product, quantity: product.quantity - qty };
-    const saleData = {
+    const newSale = {
       id: Date.now(),
       productId: product.id,
       name: product.name,
       quantity: qty,
-      customerId: customer.id,
-      customerName: customer.name,
+      customerName: sale.customerName,
       date: new Date().toLocaleString()
     };
 
     try {
       await axios.put(`http://localhost:5000/products/${product.id}`, updatedProduct);
-      await axios.post('http://localhost:5000/sales', saleData);
-
-      const [updatedProdRes, updatedSaleRes] = await Promise.all([
-        axios.get('http://localhost:5000/products'),
-        axios.get('http://localhost:5000/sales')
-      ]);
-
-      setLocalProducts(updatedProdRes.data || []);
-      setLocalSalesLog(updatedSaleRes.data || []);
-
-      setProducts(updatedProdRes.data || []);
-      setSalesLog(updatedSaleRes.data || []);
-
-      setSale({ productId: '', customerId: '', quantity: '' });
+      await axios.post('http://localhost:5000/sales', newSale);
+      setLocalSalesLog([newSale, ...localSalesLog]);
+      setSalesLog([newSale, ...localSalesLog]);
+      const updatedProducts = localProducts.map(p => p.id === product.id ? updatedProduct : p);
+      setLocalProducts(updatedProducts);
+      setProducts(updatedProducts);
+      setSale({ productId: '', customerId: '', quantity: '', customerName: '' });
     } catch (err) {
       console.error('Sale failed:', err);
       alert('Failed to record sale');
@@ -98,12 +88,7 @@ export default function Sales({ products: initialProducts, setProducts, salesLog
           ))}
         </select>
 
-        <select value={sale.customerId} onChange={e => setSale({ ...sale, customerId: e.target.value })} required>
-          <option value="">Select Customer</option>
-          {localCustomers.map(c => (
-            <option key={c.id} value={c.id}>{c.name}</option>
-          ))}
-        </select>
+        <input type="text" placeholder="Customer Name" value={sale.customerName} onChange={e => setSale({ ...sale, customerName: e.target.value })} required />
 
         <input type="number" placeholder="Quantity" value={sale.quantity} onChange={e => setSale({ ...sale, quantity: e.target.value })} required />
         <button type="submit">Record</button>

@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './inverntory.css';
 
 export default function Inventory({ products: initialProducts, setProducts }) {
   const [form, setForm] = useState({ id: null, name: '', description: '', category: '', price: '', quantity: '' });
-  const [localProducts, setLocalProducts] = useState(initialProducts);
+  const [localProducts, setLocalProducts] = useState(initialProducts || []);
 
   useEffect(() => {
-    setLocalProducts(initialProducts);
+    setLocalProducts(initialProducts || []);
   }, [initialProducts]);
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/products')
-      .then(res => { setLocalProducts(res.data); setProducts(res.data); })
-      .catch(console.error);
-  }, []);
+  const mockFetch = () => Promise.resolve([{ id: 1, name: 'Mock Product', category: 'Electronics', price: 99.99, quantity: 10 }]);
 
   const handleSubmit = async e => {
     e.preventDefault();
     const newProduct = { ...form, price: +form.price, quantity: +form.quantity, id: form.id ?? Date.now() };
     try {
-      await (form.id ? axios.put(`http://localhost:5000/products/M{form.id}`, newProduct) : axios.post('http://localhost:5000/products', newProduct));
-      const res = await axios.get('http://localhost:5000/products');
-      setLocalProducts(res.data);
-      setProducts(res.data);
+      console.log('Simulating save:', newProduct);
+      // Simulate API call
+      const updatedList = form.id
+        ? localProducts.map(p => (p.id === form.id ? newProduct : p))
+        : [...localProducts, newProduct];
+      setLocalProducts(updatedList);
+      setProducts(updatedList);
       setForm({ id: null, name: '', description: '', category: '', price: '', quantity: '' });
-    } catch (err) { console.error('Error saving product:', err); }
+    } catch (err) {
+      console.error('Error saving product:', err);
+    }
   };
 
   const startEdit = p => setForm(p);
@@ -35,12 +35,14 @@ export default function Inventory({ products: initialProducts, setProducts }) {
     if (product?.quantity > 0) return alert('Cannot delete — still in stock.');
     if (!window.confirm('Delete permanently?')) return;
     try {
-      await axios.delete(`http://localhost:5000/products/${id}`);
-      const res = await axios.get('http://localhost:5000/products');
-      setLocalProducts(res.data);
-      setProducts(res.data);
+      console.log('Simulating delete:', id);
+      const updatedList = localProducts.filter(p => p.id !== id);
+      setLocalProducts(updatedList);
+      setProducts(updatedList);
       if (form.id === id) setForm({ id: null, name: '', description: '', category: '', price: '', quantity: '' });
-    } catch (err) { console.error('Error deleting product:', err); }
+    } catch (err) {
+      console.error('Error deleting product:', err);
+    }
   };
 
   return (
@@ -58,18 +60,22 @@ export default function Inventory({ products: initialProducts, setProducts }) {
       <table>
         <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Qty</th><th>Action</th></tr></thead>
         <tbody>
-          {localProducts.map(p => (
-            <tr key={p.id} className={p.quantity < 5 ? 'low' : ''}>
-              <td>{p.name}</td>
-              <td>{p.category}</td>
-              <td>M{p.price.toFixed(2)}</td>
-              <td style={{ fontWeight: p.quantity === 0 ? 'bold' : 'normal', color: p.quantity === 0 ? '#dc3545' : 'inherit' }}>{p.quantity}</td>
-              <td>
-                <button onClick={() => startEdit(p)}>Edit</button>
-                <button onClick={() => remove(p.id)} disabled={p.quantity > 0} style={{ backgroundColor: p.quantity > 0 ? '#ccc' : '#dc3545', color: p.quantity > 0 ? '#666' : 'white', cursor: p.quantity > 0 ? 'not-allowed' : 'pointer' }}>Delete</button>
-              </td>
-            </tr>
-          ))}
+          {localProducts.length === 0 ? (
+            <tr><td colSpan="5">No products yet. Add one!</td></tr>
+          ) : (
+            localProducts.map(p => (
+              <tr key={p.id} className={p.quantity < 5 ? 'low' : ''}>
+                <td>{p.name}</td>
+                <td>{p.category}</td>
+                <td>M{p.price.toFixed(2)}</td>
+                <td style={{ fontWeight: p.quantity === 0 ? 'bold' : 'normal', color: p.quantity === 0 ? '#dc3545' : 'inherit' }}>{p.quantity}</td>
+                <td>
+                  <button onClick={() => startEdit(p)}>Edit</button>
+                  <button onClick={() => remove(p.id)} disabled={p.quantity > 0} style={{ backgroundColor: p.quantity > 0 ? '#ccc' : '#dc3545', color: p.quantity > 0 ? '#666' : 'white', cursor: p.quantity > 0 ? 'not-allowed' : 'pointer' }}>Delete</button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

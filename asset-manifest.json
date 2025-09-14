@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.40c3ca04.css",
-    "main.js": "/static/js/main.3399bba6.js",
-    "static/js/453.44863491.chunk.js": "/static/js/453.44863491.chunk.js",
-    "index.html": "/index.html",
-    "main.40c3ca04.css.map": "/static/css/main.40c3ca04.css.map",
-    "main.3399bba6.js.map": "/static/js/main.3399bba6.js.map",
-    "453.44863491.chunk.js.map": "/static/js/453.44863491.chunk.js.map"
+    "main.css": "/wings-cafe-inventory/static/css/main.40c3ca04.css",
+    "main.js": "/wings-cafe-inventory/static/js/main.26a83505.js",
+    "static/js/453.44863491.chunk.js": "/wings-cafe-inventory/static/js/453.44863491.chunk.js",
+    "index.html": "/wings-cafe-inventory/index.html",
+    "main.40c3ca04.css.map": "/wings-cafe-inventory/static/css/main.40c3ca04.css.map",
+    "main.26a83505.js.map": "/wings-cafe-inventory/static/js/main.26a83505.js.map",
+    "453.44863491.chunk.js.map": "/wings-cafe-inventory/static/js/453.44863491.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.40c3ca04.css",
-    "static/js/main.3399bba6.js"
+    "static/js/main.26a83505.js"
   ]
 }

@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/wingscafe-inventory/static/css/main.40c3ca04.css",
-    "main.js": "/wingscafe-inventory/static/js/main.c1ad967a.js",
-    "static/js/453.48e635ba.chunk.js": "/wingscafe-inventory/static/js/453.48e635ba.chunk.js",
-    "index.html": "/wingscafe-inventory/index.html",
-    "main.40c3ca04.css.map": "/wingscafe-inventory/static/css/main.40c3ca04.css.map",
-    "main.c1ad967a.js.map": "/wingscafe-inventory/static/js/main.c1ad967a.js.map",
-    "453.48e635ba.chunk.js.map": "/wingscafe-inventory/static/js/453.48e635ba.chunk.js.map"
+    "main.css": "/wings-cafe-inventory/static/css/main.40c3ca04.css",
+    "main.js": "/wings-cafe-inventory/static/js/main.61ac90d2.js",
+    "static/js/453.48e635ba.chunk.js": "/wings-cafe-inventory/static/js/453.48e635ba.chunk.js",
+    "index.html": "/wings-cafe-inventory/index.html",
+    "main.40c3ca04.css.map": "/wings-cafe-inventory/static/css/main.40c3ca04.css.map",
+    "main.61ac90d2.js.map": "/wings-cafe-inventory/static/js/main.61ac90d2.js.map",
+    "453.48e635ba.chunk.js.map": "/wings-cafe-inventory/static/js/453.48e635ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.40c3ca04.css",
-    "static/js/main.c1ad967a.js"
+    "static/js/main.61ac90d2.js"
   ]
 }
